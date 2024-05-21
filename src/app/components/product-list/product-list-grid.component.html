@@ -1,0 +1,65 @@
+<div class="main-content">
+  <div class="section-content section-content-p30">
+    <h2>Category: {{currentCategoryName}}</h2>
+    <hr>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- loop over the collection of products  -->
+        <div *ngFor="let tempProduct of products" class="col-md-3">
+          <div class="product-box">
+
+            <a routerLink="/products/{{tempProduct.id}}">
+              <img src="{{tempProduct.imageUrl}}" alt="product img" class="img-responsive">
+            </a>
+
+            <a routerLink="/products/{{tempProduct.id}}" class="d-block">
+              <h2>{{tempProduct.name}}</h2>
+            </a>
+
+            <div class="price">{{tempProduct.unitPrice | currency:'USD'}}</div>
+
+            <button (click)="addToCard(tempProduct)" class="btn btn-primary btn-sm mt-2">Add to cart</button>
+
+          </div>
+        </div>
+
+        <!-- if products empty then display a message-->
+        <div *ngIf="products?.length==0" class="alert alert-warning col-md-12" role="alert">
+          No products found.
+        </div>
+      </div>
+
+      <!--begin footer-->
+
+      <div class="footer-pagination">
+        <div class="row">
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-9" style="padding-left: 30%">
+                <ngb-pagination [(page)]="thePageNumber" [pageSize]="thePageSize" [maxSize]="5" [boundaryLinks]="true"
+                  [collectionSize]="theTotalElements" (pageChange)="listProducts()">
+                </ngb-pagination>
+              </div>
+              <div class="col-md-3 d-flex justify-content-around align-items-start">
+                <span class="mr-2">Page Size</span>
+                <select #myPageSelect (change)="updatePageSize(myPageSelect.value)">
+                  <option selected="true">5</option>
+                  <option>10</option>
+                  <option>20</option>
+                  <option>50</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--end footer-->
+
+    </div>
+  </div>
+</div>
